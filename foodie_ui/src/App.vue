@@ -1,28 +1,25 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-</script>
-
 <template>
-  <RouterView />
-
-  <footer>
-    <nav>
-      <RouterLink to="/"> <font-awesome-icon icon="house" /></RouterLink>
-      <RouterLink to="/recipes"><font-awesome-icon icon="list" /></RouterLink>
-      <RouterLink to="/favorites"><font-awesome-icon icon="heart" /></RouterLink>
-      <RouterLink to="/Settings"><font-awesome-icon icon="gear" /></RouterLink>
-    </nav>
-  </footer>
+  <v-app>
+    <router-view />
+    <v-bottom-navigation>
+      <v-btn to="/">
+        <v-icon icon="mdi-home" />
+      </v-btn>
+      <v-btn to="/recipes">
+        <v-icon icon="mdi-format-list-bulleted" />
+      </v-btn>
+      <v-btn to="/favorites">
+        <v-icon icon="mdi-heart-outline" />
+      </v-btn>
+      <v-btn to="/planner">
+        <v-icon icon="mdi-calendar-today" />
+      </v-btn>
+      <v-btn to="/settings">
+        <v-icon icon="mdi-cog" />
+      </v-btn>
+    </v-bottom-navigation>
+  </v-app>
 </template>
 
-<style scoped>
-main {
-  flex-grow: 1;
-}
-nav {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: end;
-}
+<style>
 </style>

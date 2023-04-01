@@ -35,6 +35,11 @@ const router = createRouter({
       path: '/create',
       name: 'settings_create',
       component: () => import('../views/CreateView.vue')
+    },
+    {
+      path: '/planner',
+      name: 'planner',
+      component: () => import('../views/PlannerView.vue')
     }
   ]
 })

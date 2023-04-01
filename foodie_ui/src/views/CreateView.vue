@@ -8,41 +8,65 @@ const router = useRouter()
 const name = ref('')
 const picture = ref('')
 const link = ref('')
+const ingredients = ref([])
+const units = ['g', 'mg', 'ml']
 
 async function save() {
-  await api.createRecipe({ name: name.value, picture: picture.value, link: link.value })
+  await api.createRecipe({
+    name: name.value,
+    picture: picture.value,
+    link: link.value,
+    ingredients: ingredients.value
+  })
   cancel()
 }
 
 function cancel() {
   router.push({ name: 'settings' })
 }
+
+function addNewIngredient() {
+  ingredients.value.push({ name: '', amount: 0, unit: '' })
+}
 </script>
 
 <template>
   <main>
-    <RouterLink to="/settings"
-      ><font-awesome-icon icon="chevron-left" /> Zurück zu Einstellungen</RouterLink
-    >
-    <form>
+    <v-btn to="/settings"> <v-icon icon="mdi-chevron-left" /> Zurück zu Einstellungen </v-btn>
+    <v-form>
       <div class="field">
-        <label for="name">Name</label>
-        <input id="name" v-model="name" />
+        <v-text-field v-model="name" label="Name" />
       </div>
       <div class="field">
-        <label for="picture">Bild</label>
-        <input id="picture" v-model="picture" />
+        <v-text-field v-model="picture" label="Bild" />
       </div>
       <div class="field">
-        <label for="link">Link</label>
-        <input id="link" v-model="link" />
+        <v-text-field v-model="link" label="Link" />
+      </div>
+      <div class="field">
+        <v-table
+          ><thead>
+            <tr>
+              <th class="text-left">Name</th>
+              <th class="text-left">Anzahl</th>
+              <th class="text-left">Einheit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="ingredient in ingredients" :key="ingredient.name">
+              <td><v-text-field v-model="ingredient.name" /></td>
+              <td><v-text-field v-model="ingredient.amount" pattern="[0-9]*" /></td>
+              <td><v-select v-model="ingredient.unit" :items="units" /></td>
+            </tr></tbody
+        ></v-table>
+        <v-btn @click="addNewIngredient">+</v-btn>
       </div>
 
       <div>
-        <button @click.prevent.default="save">Speichern</button>
-        <button @click.prevent.default="cancel">Abbrechen</button>
+        <v-btn @click.prevent.default="save">Speichern</v-btn>
+        <v-btn @click.prevent.default="cancel">Abbrechen</v-btn>
       </div>
-    </form>
+    </v-form>
   </main>
 </template>
 

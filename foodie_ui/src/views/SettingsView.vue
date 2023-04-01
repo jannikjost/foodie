@@ -5,21 +5,13 @@ const versionText = PACKAGE_NAME + ' @ ' + APP_VERSION
 </script>
 
 <template>
-  <main>
-    <RouterLink :to="{ name: 'settings_create' }">Neues Rezept hinzufügen</RouterLink>
+  <v-main>
+    <v-btn :to="{ name: 'settings_create' }"> Neues Rezept hinzufügen </v-btn>
     <div>
       {{ versionText }}
-      <a href=""><font-awesome-icon :icon="['fab', 'github']" /></a>
+      <a href="https://github.com/" target="_blank">github</a>
     </div>
-  </main>
+  </v-main>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+<style scoped></style>

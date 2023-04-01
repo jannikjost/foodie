@@ -2,6 +2,7 @@
 </script>
 
 <template>
-  <main>
-  </main>
+  <v-main>
+    home
+  </v-main>
 </template>
