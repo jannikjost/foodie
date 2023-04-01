@@ -1,5 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import RecipesView from '../views/RecipesView.vue'
+import FavoritesView from "../views/FavoritesView.vue"
+import SettingsView from '../views/SettingsView.vue'
+import CreateView from '../views/CreateView.vue'
+import PlannerView from '../views/PlannerView.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,34 +18,34 @@ const router = createRouter({
     {
       path: '/recipes',
       name: 'recipes',
-      component: () => import('../views/RecipesView.vue')
+      component: RecipesView
     },
     {
       path: '/favorites',
       name: 'favorites',
-      component: () => import('../views/FavoritesView.vue')
+      component: FavoritesView
     },
     {
       path: '/settings',
       name: 'settings',
-      component: () => import('../views/SettingsView.vue'),
+      component: SettingsView,
       children: [
         {
           path: 'create',
           name: 'asda',
-          component: () => import('../views/CreateView.vue')
+          component: CreateView
         }
       ]
     },
     {
       path: '/create',
       name: 'settings_create',
-      component: () => import('../views/CreateView.vue')
+      component: CreateView
     },
     {
       path: '/planner',
       name: 'planner',
-      component: () => import('../views/PlannerView.vue')
+      component: PlannerView
     }
   ]
 })

@@ -31,7 +31,7 @@ function addNewIngredient() {
 </script>
 
 <template>
-  <main>
+  <v-main>
     <v-btn to="/settings"> <v-icon icon="mdi-chevron-left" /> Zurück zu Einstellungen </v-btn>
     <v-form>
       <div class="field">
@@ -67,7 +67,7 @@ function addNewIngredient() {
         <v-btn @click.prevent.default="cancel">Abbrechen</v-btn>
       </div>
     </v-form>
-  </main>
+  </v-main>
 </template>
 
 <style>

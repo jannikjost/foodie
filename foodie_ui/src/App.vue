@@ -1,5 +1,15 @@
+<script setup>
+import OfflineBanner from './components/OfflineBanner.vue'
+import { useCommonStore } from './stores/common'
+const commonStore = useCommonStore()
+
+window.addEventListener('online', () => commonStore.setIsDeviceOffline(false))
+window.addEventListener('offline', () => commonStore.setIsDeviceOffline(true))
+</script>
+
 <template>
   <v-app>
+    <OfflineBanner />
     <router-view />
     <v-bottom-navigation>
       <v-btn to="/">
@@ -21,5 +31,4 @@
   </v-app>
 </template>
 
-<style>
-</style>
+<style></style>
