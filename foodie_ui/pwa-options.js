@@ -1,7 +1,7 @@
 export default {
   registerType: 'autoUpdate',
   devOptions: {
-    enabled: true
+    enabled: false
   },
   manifest: {
     name: 'foodie',

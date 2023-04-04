@@ -44,7 +44,7 @@ function addNewIngredient() {
         <v-text-field v-model="link" label="Link" />
       </div>
       <div class="field">
-        <v-table
+        <v-table fixed-header height="300px"
           ><thead>
             <tr>
               <th class="text-left">Name</th>
@@ -71,19 +71,18 @@ function addNewIngredient() {
 </template>
 
 <style>
+.v-main {
+  display: flex;
+  flex-direction: column;
+}
 form,
 .field {
   display: grid;
 }
 form {
   padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   gap: 1rem;
-}
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
+  overflow-y: auto;
 }
 </style>

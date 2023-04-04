@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import RecipesView from '../views/RecipesView.vue'
-import FavoritesView from "../views/FavoritesView.vue"
+import DetailsView from '../views/DetailsView.vue'
+import FavoritesView from '../views/FavoritesView.vue'
 import SettingsView from '../views/SettingsView.vue'
 import CreateView from '../views/CreateView.vue'
 import PlannerView from '../views/PlannerView.vue'
-
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +19,11 @@ const router = createRouter({
       path: '/recipes',
       name: 'recipes',
       component: RecipesView
+    },
+    {
+      path: '/recipes/:id',
+      name: 'details',
+      component: DetailsView
     },
     {
       path: '/favorites',

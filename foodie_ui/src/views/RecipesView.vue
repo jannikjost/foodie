@@ -1,14 +1,91 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useRecipesStore } from '../stores/recipeStore'
+import Api from '../api'
+
+const router = useRouter()
+const recipesStore = useRecipesStore()
+
+const filter = ref('')
+
+onMounted(async () => {
+  try {
+    recipesStore.currentRecipes = await Api.getFilteredRecipes()
+  } catch (err) {
+    console.error(err)
+  }
+})
+
+async function applyFilter(value) {
+  try {
+    recipesStore.currentRecipes = await Api.getFilteredRecipes(value)
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+function openRecipe(recipe) {
+  router.push({ name: 'details', params: { id: recipe.id } })
+}
+</script>
+
 <template>
-  <main>
-  </main>
+  <v-main>
+    <v-text-field
+      v-model="filter"
+      label=""
+      append-inner-icon="mdi-magnify"
+      variant="solo"
+      @update:modelValue="applyFilter($event)"
+    ></v-text-field>
+    <ul>
+      <li v-for="recipe in recipesStore.currentRecipes" :id="recipe.id">
+        <v-card @click="openRecipe(recipe)">
+          <v-card-title>
+            {{ recipe.name }}
+            <div class="btn-group">
+              <v-btn size="small" icon="mdi-pencil"></v-btn>
+              <v-btn size="small" icon="mdi-delete"></v-btn>
+            </div>
+          </v-card-title>
+          <div class="card-body">
+            <img class="img" :src="recipe.picture" />
+            <div>test</div>
+          </div>
+        </v-card>
+      </li>
+    </ul>
+  </v-main>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
+<style scoped>
+ul {
+  list-style: none;
+  overflow: auto;
+  height: 100%;
+}
+li {
+  margin-bottom: 2rem;
+}
+.v-card-title {
+  display: flex;
+  justify-content: space-between;
+}
+.btn-group > :first-child {
+  margin-right: 0.5rem;
+}
+.card-body {
+  display: flex;
+  flex-direction: row;
+}
+.card-body > div {
+  flex-grow: 1;
+}
+.img {
+  clip-path: circle();
+  width: 100px;
+  height: 100px;
+  margin: 0 0.5rem 0.5rem;
 }
 </style>

@@ -7,7 +7,7 @@ const versionText = PACKAGE_NAME + ' @ ' + APP_VERSION
 </script>
 
 <template>
-  <v-main>
+  <main>
     <v-btn :to="{ name: 'settings_create' }" :disabled="commonStore.isDeviceOffline.value">
       Neues Rezept hinzufügen
     </v-btn>
@@ -15,7 +15,7 @@ const versionText = PACKAGE_NAME + ' @ ' + APP_VERSION
       {{ versionText }}
       <a href="https://github.com/" target="_blank">github</a>
     </div>
-  </v-main>
+  </main>
 </template>
 
 <style scoped></style>
