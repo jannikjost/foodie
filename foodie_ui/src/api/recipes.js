@@ -4,7 +4,10 @@ const recipes = [
     name: 'filter',
     picture: 'https://cdn.vuetifyjs.com/images/cards/sunshine.jpg',
     link: '',
-    ingredients: [{ name: 'pasta', amount: 100, unit: 'g' }],
+    ingredients: [
+      { name: 'pasta', amount: 100, unit: 'g' },
+      { name: 'pepper', amount: 150, unit: 'g' }
+    ],
     nutritionFacts: {
       calories: 600,
       fat: 10,

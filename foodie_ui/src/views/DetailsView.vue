@@ -11,6 +11,19 @@ const recipe = ref({})
 onMounted(async () => {
   recipe.value = await recipesStore.getRecipeById(route.params.id)
 })
+
+function copy(ingredients) {
+  const transformedIngredients = formatIngredients(ingredients)
+  navigator.clipboard.writeText(transformedIngredients)
+}
+
+function formatIngredients(ingredients) {
+  const formattedString = ingredients.reduce((stringToBuild, ingredient) => {
+    stringToBuild += ingredient.name + ': ' + ingredient.amount + ingredient.unit + '\n'
+    return stringToBuild
+  }, '')
+  return formattedString
+}
 </script>
 
 <template>
@@ -21,21 +34,35 @@ onMounted(async () => {
     <div></div>
     <section v-if="recipe.nutritionFacts">
       <h2>Nährwerte</h2>
-      <div class="nutritionFacts-wrapper">
-        <p>{{ recipe.nutritionFacts.calories }}</p>
-        <p>{{ recipe.nutritionFacts.fat }}</p>
-        <p>{{ recipe.nutritionFacts.carbohydrate }}</p>
-        <p>{{ recipe.nutritionFacts.protein }}</p>
-      </div>
+      <v-list class="nutrition_facts" lines="one">
+        <v-list-item
+          title="Kalorien"
+          :subtitle="recipe.nutritionFacts.calories + 'kcal'"
+        ></v-list-item>
+        <v-list-item title="Fett" :subtitle="recipe.nutritionFacts.fat + 'g'"></v-list-item>
+        <v-list-item
+          title="Kohlenhydrate"
+          :subtitle="recipe.nutritionFacts.carbohydrate + 'g'"
+        ></v-list-item>
+        <v-list-item title="Eiweiss" :subtitle="recipe.nutritionFacts.protein + 'g'"></v-list-item>
+      </v-list>
     </section>
-    <section v-if="recipe.ingredients">
-      <h2>Zutaten</h2>
-      <ul>
-        <li v-for="ingredient in recipe.ingredients" :key="ingredient.name">
-          <p>{{ ingredient.name }}: {{ ingredient.amount }}{{ ingredient.unit }}</p>
-        </li>
-      </ul>
-    </section>
+    <v-menu location="top">
+      <template v-slot:activator="{ props }">
+        <section v-if="recipe.ingredients" v-bind="props">
+          <h2>Zutaten</h2>
+          <ul>
+            <li v-for="ingredient in recipe.ingredients" :key="ingredient.name">
+              <p>{{ ingredient.name }}: {{ ingredient.amount }}{{ ingredient.unit }}</p>
+            </li>
+          </ul>
+        </section>
+      </template>
+
+      <v-list class="copy_action">
+        <v-list-item title="Zutaten kopieren" @click="copy(recipe.ingredients)"> </v-list-item>
+      </v-list>
+    </v-menu>
   </main>
 </template>
 
@@ -47,8 +74,13 @@ img {
 ul {
   list-style: none;
 }
-.nutritionFacts-wrapper {
+
+.nutrition_facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.copy_action {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
 }
 </style>
