@@ -45,14 +45,11 @@ const recipes = [
   }
 ]
 
-function getFilteredRecipes(filter) {
-  return new Promise((resolve, reject) => {
-    if (!filter) {
-      resolve(recipes)
-    } else {
-      resolve([recipes[0]])
-    }
-  })
+async function getFilteredRecipes(filter) {
+  if (!filter) {
+    const res = await fetch('api/recipes')
+    return await res.json();
+  }
 }
 
 function getRecipeById(id) {
