@@ -1,4 +1,4 @@
-namespace RecipeStore.DB
+namespace foodie_api.FoodieStore
 {
     public record Ingredient
     {

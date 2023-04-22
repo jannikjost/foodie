@@ -9,11 +9,7 @@ import pwaOptions from './pwa-options'
 export default defineConfig({
   server: {
     proxy: {
-      '/api': {
-        target: 'http://localhost:8081',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
+      '/api': 'http://localhost:8081'
     }
   },
   plugins: [vue(), VitePWA(pwaOptions)],

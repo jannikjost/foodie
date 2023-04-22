@@ -1,7 +1,15 @@
 using Microsoft.OpenApi.Models;
-using RecipeStore.DB;
+using foodie_api.Models;
+using foodie_api.Services;
+using Microsoft.AspNetCore.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<FoodieDatabaseSettings>(
+    builder.Configuration.GetSection("FoodieDatabase"));
+
+builder.Services.AddSingleton<RecipesService>();
+builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -11,18 +19,12 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+app.MapControllers();
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Foodie API V1");
 });
 
-
-
-app.MapGet("/recipes/{id}", (int id) => RecipeDB.GetRecipe(id));
-app.MapGet("/recipes", () => RecipeDB.GetRecipes());
-app.MapPost("/recipes", (Recipe recipe) => RecipeDB.CreateRecipe(recipe));
-app.MapPut("/recipes", (Recipe recipe) => RecipeDB.UpdateRecipe(recipe));
-app.MapDelete("/recipes/{id}", (int id) => RecipeDB.RemoveRecipe(id));
 
 app.Run();
