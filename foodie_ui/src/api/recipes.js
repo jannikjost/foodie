@@ -1,14 +1,30 @@
+const basePath = '/api/recipes/'
+
 async function getFilteredRecipes(filter) {
   if (!filter) {
-    const res = await fetch('api/recipes')
-    return await res.json();
+    const rawResponse = await fetch(basePath)
+    const content = await rawResponse.json()
+    return content
   }
 }
 
-function getRecipeById(id) {
-  return new Promise((resolve, reject) => {
-    resolve(recipes.find((recipe) => recipe.id === id))
-  })
+async function getRecipeById(id) {
+  const rawResponse = await fetch(basePath + id)
+  const content = await rawResponse.json()
+  return content
 }
 
-export default { getFilteredRecipes, getRecipeById }
+async function createRecipe(recipe) {
+  const rawResponse = await fetch(basePath, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(recipe)
+  })
+  const content = await rawResponse.json()
+  return content
+}
+
+export default { getFilteredRecipes, getRecipeById, createRecipe }
