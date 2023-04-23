@@ -29,8 +29,16 @@ function openRecipe(recipe) {
   router.push({ name: 'details', params: { id: recipe.id } })
 }
 
+async function addToFavorites(recipe) {
+  recipe.favorite = !recipe.favorite
+  await Api.updateRecipe(recipe)
+  // TODO - improve to not get everything
+  await applyFilter(filter.value)
+}
+
 async function deleteRecipe(id) {
   await Api.deleteRecipe(id)
+  // TODO - improve to not get everything
   await applyFilter(filter.value)
 }
 </script>
@@ -50,6 +58,12 @@ async function deleteRecipe(id) {
           <v-card-title>
             {{ recipe.name }}
             <div class="btn-group">
+              <v-btn
+                size="small"
+                :icon="recipe.favorite ? 'mdi-heart' : 'mdi-heart-outline'"
+                :class="{ favorite__icon: recipe.favorite }"
+                @click.stop="addToFavorites(recipe)"
+              ></v-btn>
               <v-btn size="small" icon="mdi-pencil"></v-btn>
               <v-btn size="small" icon="mdi-delete" @click.stop="deleteRecipe(recipe.id)"></v-btn>
             </div>
@@ -92,5 +106,8 @@ li {
   width: 100px;
   height: 100px;
   margin: 0 0.5rem 0.5rem;
+}
+.favorite__icon {
+  color: red;
 }
 </style>

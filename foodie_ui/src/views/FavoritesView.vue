@@ -1,5 +1,17 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import Api from '../api'
+
+const favorites = ref([])
+
+onMounted(async () => {
+  favorites.value = await Api.getFavorites()
+})
+</script>
+
 <template>
   <main>
+    {{ favorites }}
   </main>
 </template>
 

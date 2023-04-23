@@ -18,6 +18,12 @@ async function getRecipeById(id) {
   return content
 }
 
+async function getFavorites() {
+  const rawResponse = await fetch(basePath + 'favorites')
+  const content = await rawResponse.json()
+  return content
+}
+
 async function createRecipe(recipe) {
   const rawResponse = await fetch(basePath, {
     method: 'POST',
@@ -31,10 +37,28 @@ async function createRecipe(recipe) {
   return content
 }
 
+async function updateRecipe(recipe) {
+  await fetch(basePath + recipe.id, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(recipe)
+  })
+}
+
 async function deleteRecipe(id) {
   await fetch(basePath + id, {
     method: 'DELETE'
   })
 }
 
-export default { getFilteredRecipes, getRecipeById, createRecipe, deleteRecipe }
+export default {
+  getFilteredRecipes,
+  getRecipeById,
+  getFavorites,
+  createRecipe,
+  updateRecipe,
+  deleteRecipe
+}

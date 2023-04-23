@@ -33,6 +33,9 @@ namespace foodie_api.Controllers
         [HttpGet("filtered/{filter}")]
         public async Task<List<Recipe>> GetFiltered(string filter) => await _recipesService.GetAsyncFiltered(filter);
 
+        [HttpGet("favorites")]
+        public async Task<List<Recipe>> GetFavorites() => await _recipesService.GetFavoritesAsync();
+
         [HttpPost]
         public async Task<IActionResult> Post(Recipe newRecipe)
         {
