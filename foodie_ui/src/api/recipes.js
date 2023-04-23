@@ -5,6 +5,10 @@ async function getFilteredRecipes(filter) {
     const rawResponse = await fetch(basePath)
     const content = await rawResponse.json()
     return content
+  } else {
+    const rawResponse = await fetch(basePath + 'filtered/' + filter)
+    const content = await rawResponse.json()
+    return content
   }
 }
 
@@ -27,4 +31,10 @@ async function createRecipe(recipe) {
   return content
 }
 
-export default { getFilteredRecipes, getRecipeById, createRecipe }
+async function deleteRecipe(id) {
+  await fetch(basePath + id, {
+    method: 'DELETE'
+  })
+}
+
+export default { getFilteredRecipes, getRecipeById, createRecipe, deleteRecipe }

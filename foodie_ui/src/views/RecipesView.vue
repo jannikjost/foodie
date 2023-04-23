@@ -28,6 +28,11 @@ async function applyFilter(value) {
 function openRecipe(recipe) {
   router.push({ name: 'details', params: { id: recipe.id } })
 }
+
+async function deleteRecipe(id) {
+  await Api.deleteRecipe(id)
+  await applyFilter(filter.value)
+}
 </script>
 
 <template>
@@ -46,7 +51,7 @@ function openRecipe(recipe) {
             {{ recipe.name }}
             <div class="btn-group">
               <v-btn size="small" icon="mdi-pencil"></v-btn>
-              <v-btn size="small" icon="mdi-delete"></v-btn>
+              <v-btn size="small" icon="mdi-delete" @click.stop="deleteRecipe(recipe.id)"></v-btn>
             </div>
           </v-card-title>
           <div class="card-body">

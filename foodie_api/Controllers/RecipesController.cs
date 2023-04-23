@@ -30,6 +30,9 @@ namespace foodie_api.Controllers
             return recipe;
         }
 
+        [HttpGet("filtered/{filter}")]
+        public async Task<List<Recipe>> GetFiltered(string filter) => await _recipesService.GetAsyncFiltered(filter);
+
         [HttpPost]
         public async Task<IActionResult> Post(Recipe newRecipe)
         {

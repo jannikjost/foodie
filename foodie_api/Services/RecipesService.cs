@@ -1,5 +1,6 @@
 ﻿using foodie_api.Models;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace foodie_api.Services
@@ -26,6 +27,8 @@ namespace foodie_api.Services
 
         public async Task<Recipe?> GetAsync(string id) =>
             await _recipeCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+
+        public async Task<List<Recipe>> GetAsyncFiltered(string filter) => await _recipeCollection.Find(x => x.Name != null && x.Name.Contains(filter)).ToListAsync();
 
         public async Task CreateAsync(Recipe newRecipe) =>
             await _recipeCollection.InsertOneAsync(newRecipe);
