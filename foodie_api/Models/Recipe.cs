@@ -25,6 +25,7 @@ namespace foodie_api.Models
         public string? Picture { get; set; }
         public string? Link { get; set; }
         public bool? Favorite { get; set; }
+        public int? Servings { get; set; }
         public List<Ingredient>? Ingredients { get; set; }
         public NutritionFacts? NutritionFacts { get; set; }
     }

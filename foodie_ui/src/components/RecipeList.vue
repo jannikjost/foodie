@@ -32,7 +32,6 @@ async function deleteRecipe(id) {
     <li v-for="recipe in props.recipes" :id="recipe.id">
       <v-card @click="openRecipe(recipe)">
         <v-card-title>
-          {{ recipe.name }}
           <div class="btn-group">
             <v-btn
               size="small"
@@ -44,9 +43,20 @@ async function deleteRecipe(id) {
             <v-btn size="small" icon="mdi-delete" @click.stop="deleteRecipe(recipe.id)"></v-btn>
           </div>
         </v-card-title>
+        <v-card-subtitle>{{ recipe.name }}</v-card-subtitle>
         <div class="card-body">
           <img class="img" :src="recipe.picture" />
-          <div>test</div>
+          <div v-if="recipe.nutritionFacts">
+            <p>Energie {{ recipe.nutritionFacts.calories }} kcal</p>
+            <v-list class="nutrition_facts" lines="one">
+              <v-list-item
+                title="Carbs"
+                :subtitle="recipe.nutritionFacts.carbohydrate"
+              ></v-list-item>
+              <v-list-item title="Protein" :subtitle="recipe.nutritionFacts.protein"></v-list-item>
+              <v-list-item title="Fat" :subtitle="recipe.nutritionFacts.fat"></v-list-item>
+            </v-list>
+          </div>
         </div>
       </v-card>
     </li>
@@ -64,10 +74,16 @@ li {
 }
 .v-card-title {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  border-bottom: 1px solid #000;
 }
-.btn-group > :first-child {
-  margin-right: 0.5rem;
+.v-card-subtitle {
+  padding: 1rem 1rem;
+  opacity: inherit;
+  font-size: 1.25rem;
+}
+.btn-group > :nth-child(2) {
+  margin: 0 0.5rem;
 }
 .card-body {
   display: flex;
@@ -84,5 +100,14 @@ li {
 }
 .favorite__icon {
   color: red;
+}
+.nutrition_facts {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.nutrition_facts > * {
+  display: flex;
+  align-content: center;
 }
 </style>

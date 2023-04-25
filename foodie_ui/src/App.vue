@@ -32,14 +32,16 @@ window.addEventListener('offline', () => commonStore.setIsDeviceOffline(true))
 </template>
 
 <style>
-#app{
+#app {
   height: calc(100vh - 56px) !important;
+  background-color: #d9d9d9;
 }
 .v-application__wrap {
   min-height: 0vh !important;
+  background-color: #d9d9d9;
 }
 .v-main {
-  max-height: 100%;
+  max-height: 100% !important;
   padding-bottom: 0px !important;
 }
 </style>
