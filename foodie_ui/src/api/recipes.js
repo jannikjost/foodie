@@ -24,6 +24,12 @@ async function getFavorites() {
   return content
 }
 
+async function getNewestRecipes() {
+  const rawResponse = await fetch(basePath + 'newest')
+  const content = await rawResponse.json()
+  return content
+}
+
 async function createRecipe(recipe) {
   const rawResponse = await fetch(basePath, {
     method: 'POST',
@@ -58,6 +64,7 @@ export default {
   getFilteredRecipes,
   getRecipeById,
   getFavorites,
+  getNewestRecipes,
   createRecipe,
   updateRecipe,
   deleteRecipe

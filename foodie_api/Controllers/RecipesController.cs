@@ -36,6 +36,9 @@ namespace foodie_api.Controllers
         [HttpGet("favorites")]
         public async Task<List<Recipe>> GetFavorites() => await _recipesService.GetFavoritesAsync();
 
+        [HttpGet("newest")]
+        public async Task<List<Recipe>> GetNewest() => await _recipesService.GetNewestAsync();
+
         [HttpPost]
         public async Task<IActionResult> Post(Recipe newRecipe)
         {

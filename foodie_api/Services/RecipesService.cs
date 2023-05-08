@@ -29,6 +29,8 @@ namespace foodie_api.Services
 
         public async Task<List<Recipe>> GetFavoritesAsync() => await _recipeCollection.Find(x => x.Favorite != null && x.Favorite == true).ToListAsync();
 
+        public async Task<List<Recipe>> GetNewestAsync() => await _recipeCollection.Find(_ => true).ToListAsync();
+
         public async Task<List<Recipe>> GetAsyncFiltered(string filter) => await _recipeCollection.Find(x => x.Name != null && x.Name.Contains(filter)).ToListAsync();
 
         public async Task<List<Recipe>> GetFavorites() => await _recipeCollection.Find(x => x.Favorite != null && x.Favorite == true).ToListAsync();
