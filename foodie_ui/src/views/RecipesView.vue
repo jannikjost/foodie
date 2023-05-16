@@ -37,3 +37,9 @@ async function applyFilter(value) {
     <RecipeList :recipes="recipesStore.currentRecipes" @update="applyFilter" />
   </v-main>
 </template>
+
+<style scoped>
+.v-main {
+  padding: 2rem;
+}
+</style>

@@ -17,6 +17,6 @@ const commonStore = useCommonStore()
 
 <style scoped>
 div {
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
 }
 </style>

@@ -28,56 +28,71 @@ function formatIngredients(ingredients) {
 
 <template>
   <v-main>
-    <v-btn to="/recipes"> <v-icon icon="mdi-chevron-left" /> Zurück </v-btn>
-    <v-card v-if="recipe">
-      <h1>{{ recipe.name }}</h1>
-      <img :src="recipe.picture" :alt="'picture of recipe ' + recipe.name" />
-      <div></div>
-      <section v-if="recipe.nutritionFacts">
-        <h2>Nährwerte</h2>
-        <v-list class="nutrition_facts" lines="one">
-          <v-list-item
-            title="Kalorien"
-            :subtitle="recipe.nutritionFacts.calories + 'kcal'"
-          ></v-list-item>
-          <v-list-item title="Fett" :subtitle="recipe.nutritionFacts.fat + 'g'"></v-list-item>
-          <v-list-item
-            title="Kohlenhydrate"
-            :subtitle="recipe.nutritionFacts.carbohydrate + 'g'"
-          ></v-list-item>
-          <v-list-item
-            title="Eiweiss"
-            :subtitle="recipe.nutritionFacts.protein + 'g'"
-          ></v-list-item>
-        </v-list>
-      </section>
-      <v-menu location="top">
-        <template v-slot:activator="{ props }">
-          <section v-if="recipe.ingredients" v-bind="props">
-            <h2>Zutaten für {{ recipe.servings }} Portionen</h2>
-            <ul>
-              <li v-for="ingredient in recipe.ingredients" :key="ingredient.name">
-                <p>{{ ingredient.amount }} {{ ingredient.unit }} {{ ingredient.name }}</p>
-              </li>
-            </ul>
-          </section>
-        </template>
-
-        <v-list class="copy_action">
-          <v-list-item title="Zutaten kopieren" @click="copy(recipe.ingredients)"> </v-list-item>
-        </v-list>
-      </v-menu>
+    <v-card class="btn-group">
+      <v-btn class="btn_back" to="/recipes"><v-icon icon="mdi-chevron-left" /> Zurück</v-btn>
+      <v-btn
+        size="small"
+        :icon="recipe.favorite ? 'mdi-heart' : 'mdi-heart-outline'"
+        :class="{ favorite__icon: recipe.favorite }"
+        @click.stop="addToFavorites(recipe)"
+      />
+      <v-btn size="small" icon="mdi-pencil" />
+      <v-btn size="small" icon="mdi-delete" @click.stop="deleteRecipe(recipe.id)" />
     </v-card>
+    <div class="recipe" v-if="recipe">
+      <v-card>
+        <h1>{{ recipe.name }}</h1>
+        <img :src="recipe.picture" :alt="'picture of recipe ' + recipe.name" />
+      </v-card>
+      <section v-if="recipe.nutritionFacts">
+        <v-card>
+          <h2>Nährwerte</h2>
+          <v-list class="nutrition_facts" lines="one">
+            <v-list-item title="Kalorien" :subtitle="recipe.nutritionFacts.calories + 'kcal'" />
+            <v-list-item title="Fett" :subtitle="recipe.nutritionFacts.fat + 'g'" />
+            <v-list-item
+              title="Kohlenhydrate"
+              :subtitle="recipe.nutritionFacts.carbohydrate + 'g'"
+            />
+            <v-list-item title="Eiweiss" :subtitle="recipe.nutritionFacts.protein + 'g'" />
+          </v-list>
+        </v-card>
+      </section>
+      <v-card>
+        <v-menu location="top">
+          <template v-slot:activator="{ props }">
+            <section v-if="recipe.ingredients" v-bind="props">
+              <h2>Zutaten für {{ recipe.servings }} Portionen</h2>
+              <ul>
+                <li v-for="ingredient in recipe.ingredients" :key="ingredient.name">
+                  <p>{{ ingredient.amount }} {{ ingredient.unit }} {{ ingredient.name }}</p>
+                </li>
+              </ul>
+            </section>
+          </template>
+
+          <v-list class="copy_action">
+            <v-list-item title="Zutaten kopieren" @click="copy(recipe.ingredients)" />
+          </v-list>
+        </v-menu>
+      </v-card>
+    </div>
   </v-main>
 </template>
 
 <style scoped>
+.v-main {
+  padding: 2rem;
+  background-color: #e2dcfe;
+}
+/* .recipe {
+  background-color: #e2dcfe;
+} */
 .v-card {
   margin-top: 0.5rem;
-  height: 100%;
   padding: 0.5rem;
   overflow: auto;
-  height: 100%;
+  border-radius: 8px;
 }
 img {
   width: 100%;
@@ -94,5 +109,14 @@ ul {
 .copy_action {
   display: flex;
   justify-content: center;
+}
+.btn-group {
+  display: flex;
+  /* background: #ffdfff; */
+}
+.btn_back {
+  background-color: #6345fe !important;
+  color: #fff;
+  margin: 0 auto 0 0;
 }
 </style>

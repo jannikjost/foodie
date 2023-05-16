@@ -30,9 +30,9 @@ async function deleteRecipe(id) {
 <template>
   <ul>
     <li v-for="recipe in props.recipes" :id="recipe.id">
-      <v-card @click="openRecipe(recipe)">
+      <v-card class="recipe_card" @click="openRecipe(recipe)">
         <v-card-title>
-          <div class="btn-group">
+          <v-card class="btn-group">
             <v-btn
               size="small"
               :icon="recipe.favorite ? 'mdi-heart' : 'mdi-heart-outline'"
@@ -41,21 +41,26 @@ async function deleteRecipe(id) {
             ></v-btn>
             <v-btn size="small" icon="mdi-pencil"></v-btn>
             <v-btn size="small" icon="mdi-delete" @click.stop="deleteRecipe(recipe.id)"></v-btn>
-          </div>
+          </v-card>
         </v-card-title>
         <v-card-subtitle>{{ recipe.name }}</v-card-subtitle>
         <div class="card-body">
           <img class="img" :src="recipe.picture" />
-          <div v-if="recipe.nutritionFacts">
-            <p>Energie {{ recipe.nutritionFacts.calories }} kcal</p>
-            <v-list class="nutrition_facts" lines="one">
-              <v-list-item
-                title="Carbs"
-                :subtitle="recipe.nutritionFacts.carbohydrate"
-              ></v-list-item>
-              <v-list-item title="Protein" :subtitle="recipe.nutritionFacts.protein"></v-list-item>
-              <v-list-item title="Fat" :subtitle="recipe.nutritionFacts.fat"></v-list-item>
-            </v-list>
+          <div class="nutrition_facts_wrapper" v-if="recipe.nutritionFacts">
+            <!-- <p>Energie {{ recipe.nutritionFacts.calories }} kcal</p> -->
+            <v-card>
+              <v-list class="nutrition_facts" lines="one">
+                <v-list-item
+                  title="Carbs"
+                  :subtitle="recipe.nutritionFacts.carbohydrate"
+                ></v-list-item>
+                <v-list-item
+                  title="Protein"
+                  :subtitle="recipe.nutritionFacts.protein"
+                ></v-list-item>
+                <v-list-item title="Fat" :subtitle="recipe.nutritionFacts.fat"></v-list-item>
+              </v-list>
+            </v-card>
           </div>
         </div>
       </v-card>
@@ -72,22 +77,30 @@ ul {
 li {
   margin-bottom: 2rem;
 }
+.v-card {
+  background-color: #e2dcfe;
+  border-radius: 8px;
+}
 .v-card-title {
   display: flex;
   justify-content: flex-end;
-  border-bottom: 1px solid #000;
 }
 .v-card-subtitle {
   padding: 1rem 1rem;
   opacity: inherit;
   font-size: 1.25rem;
+  font-weight: bold;
 }
-.btn-group > :nth-child(2) {
+.btn-group {
+  background-color: #6345fe;
+  padding: 0.25rem;
+}
+.btn-group > :nth-child(3) {
   margin: 0 0.5rem;
 }
 .card-body {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 .card-body > div {
   flex-grow: 1;
@@ -100,6 +113,9 @@ li {
 }
 .favorite__icon {
   color: red;
+}
+.nutrition_facts_wrapper {
+  padding: 0.75rem;
 }
 .nutrition_facts {
   display: flex;
